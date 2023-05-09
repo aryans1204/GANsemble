@@ -1,12 +1,14 @@
-import os
-import numpy as np
-import cv2
 import io
+import os
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import PIL
+from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-from keras.preprocessing.image import ImageDataGenerator
-import PIL
-import matplotlib.pyplot as plt
+
 
 def load_data():
     labels = ['glioma']
@@ -44,7 +46,7 @@ def load_data():
     # Convert the label arrays to integers
     Y_train = Y_train.astype(int)
     Y_test = Y_test.astype(int)
-    
+
     #shuffle training dataset
     X_train,Y_train = shuffle(X_train,Y_train,random_state=101)
     # Define folder paths
@@ -66,7 +68,7 @@ def load_data():
         horizontal_flip=True,
         vertical_flip=False,
         rescale=1./255
-    )   
+    )
 
     # Define ImageDataGenerator for test data
     test_datagen = ImageDataGenerator(rescale=1./255)
@@ -87,7 +89,7 @@ def load_data():
     X_train,X_test,Y_train,Y_test = train_test_split(X_train,Y_train,test_size=0.1,random_state=101)
     Y_train = np.ones(Y_train.shape)
     Y_test = np.ones(Y_test.shape)
-
+    return X_train, X_test, Y_train, Y_test
 
 
 if __name__ == "__main__":
